@@ -1,4 +1,4 @@
-import cv2
+import cv2 #
 import numpy as np
 from sklearn.cluster import KMeans
 import matplotlib.pyplot as plt
