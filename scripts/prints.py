@@ -53,7 +53,7 @@ def extrair_frames_de_video(caminho_video, pasta_saida_frames, intervalo_segundo
     print(f"Extração concluída. Total de {frames_extraidos} frames salvos em '{pasta_saida_frames}'.")
 
 if __name__ == "__main__":
-    pasta_videos = "../Supernatural/SupernaturalS03"  
+    pasta_videos = "../Supernatural/SupernaturalS12"  
     
     pasta_saida_raiz = "frames" 
 
