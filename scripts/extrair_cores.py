@@ -105,7 +105,7 @@ if __name__ == "__main__":
         os.makedirs(pasta_saida_resultados)
         print(f"Pasta de resultados '{pasta_saida_resultados}' criada.")
     
-    temporada_alvo_para_analisar = "supernatural.s06"  
+    temporada_alvo_para_analisar = "supernatural.s12"  
     n_cores_para_analise = 25
     
     print("--- INICIANDO ANÁLISE DE CORES AVANÇADA ---")
