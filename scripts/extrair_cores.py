@@ -4,7 +4,8 @@ from sklearn.cluster import KMeans
 import os
 import pandas as pd
 from tqdm import tqdm
-
+import time 
+import psutil
 
 def calcular_luminosidade(imagem):
     if imagem is None: return None
@@ -39,6 +40,13 @@ def extrair_cores_dominantes(imagem, n_cores):
     cores = cores[idx_ordenado]
     proporcoes = proporcoes[idx_ordenado]
     return cores, proporcoes
+
+def capturar_metricas(inicio_tempo):
+    tempo_total = time.time() - inicio_tempo
+    processo = psutil.Process(os.getpid())
+    memoria_mb = processo.memory_info().rss / (1024 * 1024)
+    uso_cpu = psutil.cpu_percent(interval=None)
+    return tempo_total, memoria_mb, uso_cpu
 
 def analisar_cores_por_temporada(pasta_raiz_frames, temporada_alvo, n_cores_por_frame, pasta_saida_csv):
     caminho_temporada = os.path.join(pasta_raiz_frames, temporada_alvo)
@@ -97,23 +105,21 @@ def analisar_cores_por_temporada(pasta_raiz_frames, temporada_alvo, n_cores_por_
     print(f"\nAnálise da {temporada_alvo.upper()} concluída! Resultados salvos em '{csv_saida_temporada}'.")
     print(f"Total de frames analisados nesta temporada: {len(df_resultados)}")
 
+
+
 if __name__ == "__main__":
-    pasta_raiz_dos_frames = "frames" 
-    pasta_saida_resultados = "resultados"
+    inicio = time.time()
     
-    if not os.path.isdir(pasta_saida_resultados):
-        os.makedirs(pasta_saida_resultados)
-        print(f"Pasta de resultados '{pasta_saida_resultados}' criada.")
+    n_cores_para_analise = 25 
+    temporada = "supernatural.s03"
     
-    temporada_alvo_para_analisar = "supernatural.s12"  
-    n_cores_para_analise = 25
+    print(f"--- INICIANDO EXTRAÇÃO: {temporada} ---")
+    analisar_cores_por_temporada("frames", temporada, n_cores_para_analise, "resultados")
     
-    print("--- INICIANDO ANÁLISE DE CORES AVANÇADA ---")
-    analisar_cores_por_temporada(
-        pasta_raiz_frames=pasta_raiz_dos_frames,  
-        temporada_alvo=temporada_alvo_para_analisar,
-        n_cores_por_frame=n_cores_para_analise,
-        pasta_saida_csv=pasta_saida_resultados
-    )
-    
-    print("\nPROCESSO COMPLETO. O arquivo CSV foi gerado para a temporada especificada.")
+    tempo, memoria, cpu = capturar_metricas(inicio)
+    print(f"\n{'='*40}")
+    print(f"MÉTRICAS DE DESEMPENHO")
+    print(f"Tempo Total: {tempo/60:.2f} minutos")
+    print(f"Pico de RAM: {memoria:.2f} MB")
+    print(f"Uso de CPU: {cpu}%")
+    print(f"{'='*40}")
