@@ -1,0 +1,10 @@
+Temporada: supernatural.s03 | Tempo: 46.00min | RAM: 451.90MB | CPU: 13.4%
+Temporada: supernatural.s04 | Tempo: 63.79min | RAM: 571.05MB | CPU: 12.9%
+Temporada: supernatural.s05 | Tempo: 61.74min | RAM: 570.75MB | CPU: 13.1%
+Temporada: supernatural.s06 | Tempo: 62.94min | RAM: 576.30MB | CPU: 13.5%
+Temporada: supernatural.s07 | Tempo: 67.90min | RAM: 603.83MB | CPU: 13.5%
+Temporada: supernatural.s08 | Tempo: 67.31min | RAM: 610.77MB | CPU: 13.4%
+Temporada: supernatural.s09 | Tempo: 112.74min | RAM: 614.75MB | CPU: 11.8%
+Temporada: supernatural.s10 | Tempo: 119.95min | RAM: 620.62MB | CPU: 12.2%
+Temporada: supernatural.s11 | Tempo: 98.99min | RAM: 589.27MB | CPU: 12.1%
+Temporada: supernatural.s12 | Tempo: 109.28min | RAM: 595.31MB | CPU: 11.5%
