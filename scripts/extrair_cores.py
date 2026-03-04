@@ -108,18 +108,42 @@ def analisar_cores_por_temporada(pasta_raiz_frames, temporada_alvo, n_cores_por_
 
 
 if __name__ == "__main__":
-    inicio = time.time()
+    pasta_raiz_dos_frames = "frames" 
+    pasta_saida_resultados = "resultados"
     
+    if not os.path.isdir(pasta_saida_resultados):
+        os.makedirs(pasta_saida_resultados)
+    
+    temporadas = [d for d in os.listdir(pasta_raiz_dos_frames) 
+                 if os.path.isdir(os.path.join(pasta_raiz_dos_frames, d))]
+    
+    temporadas.sort()
     n_cores_para_analise = 25 
-    temporada = "supernatural.s03"
     
-    print(f"--- INICIANDO EXTRAÇÃO: {temporada} ---")
-    analisar_cores_por_temporada("frames", temporada, n_cores_para_analise, "resultados")
-    
-    tempo, memoria, cpu = capturar_metricas(inicio)
-    print(f"\n{'='*40}")
-    print(f"MÉTRICAS DE DESEMPENHO")
-    print(f"Tempo Total: {tempo/60:.2f} minutos")
-    print(f"Pico de RAM: {memoria:.2f} MB")
-    print(f"Uso de CPU: {cpu}%")
-    print(f"{'='*40}")
+    print(f"--- INICIANDO PROCESSAMENTO INTELIGENTE ---")
+    inicio_geral = time.time()
+
+    for temporada in temporadas:
+        arquivo_esperado = os.path.join(pasta_saida_resultados, f"analise_{temporada}.csv")
+        
+        if os.path.exists(arquivo_esperado):
+            print(f"--- PULANDO: {temporada} (Já processada) ---")
+            continue
+            
+        inicio_temporada = time.time()
+        
+        analisar_cores_por_temporada(
+            pasta_raiz_frames=pasta_raiz_dos_frames,  
+            temporada_alvo=temporada,
+            n_cores_por_frame=n_cores_para_analise,
+            pasta_saida_csv=pasta_saida_resultados
+        )
+        
+        tempo_temp, memoria_temp, cpu_temp = capturar_metricas(inicio_temporada)
+        
+        with open("log_performance_geral.txt", "a") as f:
+            f.write(f"Temporada: {temporada} | Tempo: {tempo_temp/60:.2f}min | RAM: {memoria_temp:.2f}MB | CPU: {cpu_temp}%\n")
+            
+        print(f">>> Concluído: {temporada} em {tempo_temp/60:.2f} minutos.")
+
+    print(f"\n{'='*40}\nSincronização concluída!\n{'='*40}")
